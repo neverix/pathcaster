@@ -17,7 +17,7 @@ func (l SurfaceList) Hit(r *Ray) *Hit {
 	for _, surf := range l {
 		hit := surf.Hit(r)
 		if hit != nil {
-			distance := hit.position.Sub(r.Position).Mag()
+			distance := hit.Position.Sub(r.Position).Mag()
 			if(distance < minDistance) {
 				minDistance = distance
 				minDistanceHit = hit
