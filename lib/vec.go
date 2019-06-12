@@ -39,3 +39,8 @@ func (v Vec) Mag() float64 {
 func (v Vec) Norm() Vec {
 	return v.Div(v.Mag())
 }
+
+// Dot computes the dot product of two vectors
+func(v Vec) Dot(o Vec) float64 {
+	return v.X * o.X + v.Y * o.Y + v.Z * o.Z
+}
