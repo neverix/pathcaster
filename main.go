@@ -40,7 +40,7 @@ func main() {
 					Y: float64(y) / float64(height) - 0.5,
 					Z: 1}}
 			hit := surfaces.Hit(ray)
-			canvas.Set(x, y, hit.Color)
+			canvas.Set(x, y, hit.Material.Color)
 		}
 	}
 

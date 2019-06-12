@@ -23,5 +23,5 @@ func (s *Sphere) Hit(r *Ray) *Hit {
 		return nil
 	}
 	t := (-b - math.Sqrt(d)) / (a * 2)
-	return &Hit{r.AtPosition(t), Vec{}, s.Color}
+	return &Hit{r.AtPosition(t), Vec{}, Material{s.Color}}
 }
