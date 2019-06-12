@@ -1,2 +1,2 @@
 #!/bin/sh
-find . -name '*.go' | entr go run main.go
+find . -name '*.go' | entr -c go run main.go

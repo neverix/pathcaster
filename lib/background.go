@@ -11,6 +11,6 @@ type Background struct {
 }
 
 // Hit is an implementation of the hit method for backgrounds
-func (b Background) Hit(r *Ray) *Hit {
-	return &Hit{r.AtPosition(math.Inf(1)), r.Direction.Neg(), b.Color}
+func (b *Background) Hit(r *Ray) *Hit {
+	return &Hit{r.AtPosition(math.Pow(2.0, 64)), r.Direction.Neg(), b.Color}
 }
