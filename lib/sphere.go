@@ -9,6 +9,7 @@ import (
 type Sphere struct {
 	Position Vec
 	Radius float64
+	Color color.Color
 }
 
 // Hit is an implementation of the hit method for a sphere
@@ -22,5 +23,5 @@ func (s Sphere) Hit(r *Ray) *Hit {
 		return nil
 	}
 	t := (-b - math.Sqrt(d)) / (a * 2)
-	return &Hit{r.AtPosition(t), Vec{}, color.Gray{128}}
+	return &Hit{r.AtPosition(t), Vec{}, s.Color}
 }
