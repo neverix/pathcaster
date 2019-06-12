@@ -23,5 +23,15 @@ func (s *Sphere) Hit(r *Ray) *Hit {
 		return nil
 	}
 	t := (-b - math.Sqrt(d)) / (a * 2)
-	return &Hit{r.AtPosition(t), Vec{}, Material{s.Color}}
+	hitPosition := r.AtPosition(t)
+	normal := hitPosition.Sub(s.Position).Norm()
+	normalColor := color.RGBA{
+		uint8((normal.X + 1) / 2 * 255),
+		uint8((normal.Y + 1) / 2 * 255),
+		uint8((normal.Z - 1) * 255),
+		255}
+	return &Hit{
+		hitPosition,
+		normal,
+		Material{normalColor}}
 }
