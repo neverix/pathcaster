@@ -28,5 +28,5 @@ func (s *Sphere) Hit(r *Ray) *Hit {
 	return &Hit{
 		hitPosition,
 		normal,
-		Material{s.Color}}
+		&EmissiveMaterial{s.Color}}
 }
