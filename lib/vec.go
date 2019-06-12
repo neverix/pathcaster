@@ -4,31 +4,38 @@ import "math"
 
 // Vec is a 3D Vector type
 type Vec struct {
-	x float64
-	y float64
-	z float64
+	X float64
+	Y float64
+	Z float64
 }
 
-func (v Vec) add(o Vec) Vec {
-	return Vec{v.x + o.x, v.y + o.y, v.z + o.z}
+// Add adds one vector to another
+func (v Vec) Add(o Vec) Vec {
+	return Vec{v.X + o.X, v.Y + o.Y, v.Z + o.Z}
 }
 
-func (v Vec) sub(o Vec) Vec {
-	return Vec{v.x - o.x, v.y - o.y, v.z - o.z}
+// Sub subtracts one vector from another
+func (v Vec) Sub(o Vec) Vec {
+	return Vec{v.X - o.X, v.Y - o.Y, v.Z - o.Z}
 }
 
-func (v Vec) mul(o float64) Vec {
-	return Vec{v.x * o, v.y * o, v.z * o}
+
+// Mul multiplies a vector by a number
+func (v Vec) Mul(o float64) Vec {
+	return Vec{v.X * o, v.Y * o, v.Z * o}
 }
 
-func (v Vec) div(o float64) Vec {
-	return Vec{v.x / o, v.y / o, v.z / o}
+// Div divides a vector by a number
+func (v Vec) Div(o float64) Vec {
+	return Vec{v.X / o, v.Y / o, v.Z / o}
 }
 
-func (v Vec) mag() float64 {
-    return math.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
+// Mag returns the magnitude of a vector
+func (v Vec) Mag() float64 {
+    return math.Sqrt(v.X * v.X + v.Y * v.Y + v.Z * v.Z)
 }
 
-func (v Vec) norm() Vec {
-	return v.div(v.mag())
+// Norm returns a normalized copy of a vector
+func (v Vec) Norm() Vec {
+	return v.Div(v.Mag())
 }
