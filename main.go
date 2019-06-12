@@ -22,7 +22,12 @@ func main() {
 			Position: lib.Vec{
 				X: 0, Y: 0, Z: 15},
 			Radius: 4,
-			Color: color.RGBA{128, 128, 128, 255}}}
+			Color: color.RGBA{128, 128, 128, 255}},
+		&lib.Sphere{
+			Position: lib.Vec{
+				X: 0, Y: 94, Z: 15},
+			Radius: 90,
+			Color: color.RGBA{0, 255, 0, 255}}}
 
 	canvas := image.NewRGBA(image.Rect(0, 0, width, height))
 
