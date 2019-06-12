@@ -30,6 +30,11 @@ func (v Vec) Div(o float64) Vec {
 	return Vec{v.X / o, v.Y / o, v.Z / o}
 }
 
+// Neg computes the negative of a vector
+func (v Vec) Neg() Vec {
+	return Vec{-v.X, -v.Y, -v.Z}
+}
+
 // Mag returns the magnitude of a vector
 func (v Vec) Mag() float64 {
     return math.Sqrt(v.X * v.X + v.Y * v.Y + v.Z * v.Z)
