@@ -3,6 +3,7 @@ package lib
 import (
 	"image/color"
 	"math"
+	"math/rand"
 )
 
 // Camera is a data type that represents a camera
@@ -18,7 +19,8 @@ func (cam *Camera) CastRay(x int, y int) *Ray {
 		Position: cam.Position,
 		Direction: Vec{
 			cam.Position.X + (float64(x) / float64(cam.ScreenWidth) - 0.5) * 
-				float64(cam.ScreenWidth) / float64(cam.ScreenHeight),
+				float64(cam.ScreenWidth) / float64(cam.ScreenHeight) +
+				(1.0 / float64(cam.ScreenWidth)) * (rand.Float64() * 2.0 - 1.0),
 			cam.Position.Y + float64(y) /
 				float64(cam.ScreenHeight) - 0.5,
 			cam.Position.Z + 1}.Norm()}
