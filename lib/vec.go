@@ -40,6 +40,11 @@ func (v Vec) Mag() float64 {
     return math.Sqrt(v.X * v.X + v.Y * v.Y + v.Z * v.Z)
 }
 
+// SqrMag returns the squared magnitude of a vector
+func (v Vec) SqrMag() float64 {
+	return v.X * v.X + v.Y * v.Y + v.Z * v.Z
+}
+
 // Norm returns a normalized copy of a vector
 func (v Vec) Norm() Vec {
 	return v.Div(v.Mag())

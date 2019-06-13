@@ -12,9 +12,10 @@ import (
 )
 
 const (
-	width = 200
-	height = 100
-	samples = 5
+	width = 100
+	height = 50
+	samples = 100
+	maxDepth = 50
 )
 
 func main() {
@@ -22,14 +23,18 @@ func main() {
 		&lib.Background{Color: color.White},
 		&lib.Sphere{
 			Position: lib.Vec{
-				X: 0, Y: 0, Z: 15},
-			Radius: 4,
-			Color: color.RGBA{128, 128, 128, 255}},
-		&lib.Sphere{
-			Position: lib.Vec{
 				X: 0, Y: 94, Z: 15},
 			Radius: 90,
-			Color: color.RGBA{0, 255, 0, 255}}}
+			Color: color.RGBA{0, 255, 0, 255}},
+		&lib.Sphere{
+			Position: lib.Vec{
+				X: 0, Y: 0, Z: 15},
+			Radius: 4,
+			Color: color.RGBA{255, 0, 0, 255}}}
+	camera := lib.Camera{
+		Position: lib.Vec{X: 0, Y: 0, Z: 0.3},
+		ScreenWidth: width,
+		ScreenHeight: height}
 
 	canvas := image.NewRGBA(image.Rect(0, 0, width, height))
 
@@ -39,20 +44,7 @@ func main() {
 			var gTotal float64
 			var bTotal float64
 			for i := 0; i < samples; i++ {
-				ray := &lib.Ray{
-					Position: lib.Vec{
-						X: 0,
-						Y: 0,
-						Z: 0},
-					Direction: lib.Vec{
-						X: float64(x) / float64(width) * 
-							float64(width) / float64(height) -
-							float64(width) / float64(height) / 2.0,
-						Y: float64(y) / float64(height) - 0.5,
-						Z: 1}}
-				hit := surfaces.Hit(ray, 0.001, math.MaxFloat64)
-				color := hit.Material.Render(hit, &surfaces)
-				r, g, b, _ := color.RGBA()
+				r, g, b, _ := camera.RenderPixel(surfaces, x, y, maxDepth).RGBA()
 				rTotal += math.Sqrt(float64(r) / 65535.0) * 255.0
 				gTotal += math.Sqrt(float64(g) / 65535.0) * 255.0
 				bTotal += math.Sqrt(float64(b) / 65535.0) * 255.0

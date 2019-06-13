@@ -4,5 +4,5 @@ package lib
 type Hit struct {
 	Position Vec
 	Normal Vec
-	Material Material
+	Shader Shader
 }

@@ -11,9 +11,12 @@ type Background struct {
 }
 
 // Hit is an implementation of the hit method for backgrounds
-func (b *Background) Hit(r *Ray, tMin float64, tMax float64) *Hit {
-	return &Hit{
-		r.AtPosition(math.Pow(2.0, 64)),
-		r.Direction.Neg(),
-		&EmissiveMaterial{b.Color}}
+func (b *Background) Hit(r *Ray, tMin, tMax float64) *Hit {
+	if math.IsInf(tMax, 1) {
+		return &Hit{
+			r.AtPosition(math.Pow(2.0, 64)),
+			r.Direction.Neg(),
+			&EmissiveShader{b.Color}}
+	}
+	return nil
 }
