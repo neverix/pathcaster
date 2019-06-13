@@ -1,9 +1,6 @@
 package lib
 
-import (
-	"image/color"
-	"math/rand"
-)
+import "math/rand"
 
 // Shader is a data type for shaders
 type Shader interface {
@@ -12,13 +9,13 @@ type Shader interface {
 
 // ScatterResult is a data type for scatter results
 type ScatterResult struct {
-	Albedo color.Color
+	Albedo Color
 	Scattered *Ray
 }
 
 // EmissiveShader is an emissive shader
 type EmissiveShader struct {
-	Color color.Color
+	Color Color
 }
 
 // Scatter is an emissive material scatter renderer
@@ -28,7 +25,7 @@ func (d *EmissiveShader) Scatter(r *Ray, h *Hit) *ScatterResult {
 
 // DiffuseShader is an diffuse shader
 type DiffuseShader struct {
-	Color color.Color
+	Color Color
 }
 
 // Scatter is an diffuse shader scatter renderer

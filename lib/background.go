@@ -1,13 +1,10 @@
 package lib
 
-import (
-	"image/color"
-	"math"
-)
+import "math"
 
 // Background is a background surface
 type Background struct {
-	Color color.Color
+	Color Color
 }
 
 // Hit is an implementation of the hit method for backgrounds

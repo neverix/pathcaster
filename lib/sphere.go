@@ -1,15 +1,12 @@
 package lib
 
-import (
-	"math"
-	"image/color"
-)
+import "math"
 
 // Sphere is a sphere
 type Sphere struct {
 	Position Vec
 	Radius float64
-	Color color.Color
+	Shader Shader
 }
 
 // Hit is an implementation of the hit method for a sphere
@@ -34,5 +31,5 @@ func (s *Sphere) Hit(r *Ray, tMin, tMax float64) *Hit {
 	return &Hit{
 		hitPosition,
 		normal,
-		&DiffuseShader{s.Color}}
+		s.Shader}
 }
