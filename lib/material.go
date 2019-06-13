@@ -1,6 +1,9 @@
 package lib
 
-import "image/color"
+import (
+	"image/color"
+	"math"
+)
 
 // Material is a data type for materials
 type Material interface {
@@ -25,12 +28,11 @@ type DiffuseMaterial struct {
 // Render is an diffuse material renderer
 func (d *DiffuseMaterial) Render(h *Hit, w Surface) color.Color {
 	target := h.Position.Add(h.Normal).Add(randInUnitSphere())
-	hit := w.Hit(&Ray{h.Position, target.Sub(h.Position)})
+	hit := w.Hit(&Ray{h.Position, target.Sub(h.Position)}, 0.001, math.MaxFloat64)
 	r, g, b, _ := hit.Material.Render(hit, w).RGBA()
-	dr, dg, db, _ := d.Color.RGBA()
 	return color.RGBA{
-		uint8(float64(r) / 65535.0 * float64(dr) / 65535.0 * 255.0),
-		uint8(float64(g) / 65535.0 * float64(dg) / 65535.0 * 255.0),
-		uint8(float64(b) / 65535.0 * float64(db) / 65535.0 * 255.0),
+		uint8(float64(r) / 65535.0 * 255.0 * 0.5),
+		uint8(float64(g) / 65535.0 * 255.0 * 0.5),
+		uint8(float64(b) / 65535.0 * 255.0 * 0.5),
 		255}
 }

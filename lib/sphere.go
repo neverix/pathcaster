@@ -13,7 +13,7 @@ type Sphere struct {
 }
 
 // Hit is an implementation of the hit method for a sphere
-func (s *Sphere) Hit(r *Ray) *Hit {
+func (s *Sphere) Hit(r *Ray, tMin float64, tMax float64) *Hit {
 	offset := r.Position.Sub(s.Position)
 	a := r.Direction.Dot(r.Direction)
 	b := offset.Dot(r.Direction) * 2

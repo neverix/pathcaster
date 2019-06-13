@@ -7,12 +7,14 @@ import (
 	"image/png"
 	"log"
 	"os"
+	"math"
 	"github.com/neverix/pathcaster/lib"
 )
 
 const (
 	width = 200
 	height = 100
+	samples = 5
 )
 
 func main() {
@@ -33,19 +35,34 @@ func main() {
 
 	for x := 0; x < width; x++ {
 		for y := 0; y < height; y++ {
-			ray := &lib.Ray{
-				Position: lib.Vec{
-					X: 0,
-					Y: 0,
-					Z: 0},
-				Direction: lib.Vec{
-					X: float64(x) / float64(width) * 
-						float64(width) / float64(height) -
-						float64(width) / float64(height) / 2.0,
-					Y: float64(y) / float64(height) - 0.5,
-					Z: 1}}
-			hit := surfaces.Hit(ray)
-			canvas.Set(x, y, hit.Material.Render(hit, &surfaces))
+			var rTotal float64
+			var gTotal float64
+			var bTotal float64
+			for i := 0; i < samples; i++ {
+				ray := &lib.Ray{
+					Position: lib.Vec{
+						X: 0,
+						Y: 0,
+						Z: 0},
+					Direction: lib.Vec{
+						X: float64(x) / float64(width) * 
+							float64(width) / float64(height) -
+							float64(width) / float64(height) / 2.0,
+						Y: float64(y) / float64(height) - 0.5,
+						Z: 1}}
+				hit := surfaces.Hit(ray, 0.001, math.MaxFloat64)
+				color := hit.Material.Render(hit, &surfaces)
+				r, g, b, _ := color.RGBA()
+				rTotal += math.Sqrt(float64(r) / 65535.0) * 255.0
+				gTotal += math.Sqrt(float64(g) / 65535.0) * 255.0
+				bTotal += math.Sqrt(float64(b) / 65535.0) * 255.0
+			}
+			color := color.RGBA{
+				uint8(rTotal / samples),
+				uint8(gTotal / samples),
+				uint8(bTotal / samples),
+				255}
+			canvas.Set(x, y, color)
 		}
 	}
 
