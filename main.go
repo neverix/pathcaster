@@ -16,33 +16,31 @@ const (
 	width    = 100
 	height   = 50
 	samples  = 100
-	maxDepth = 3
+	maxDepth = 5
 )
 
 func main() {
 	var surfaces lib.SurfaceList = []lib.Surface{
 		&lib.Background{Color: lib.Color{
-			R: 1, G: 1, B: 1}},
-		/*
-			&lib.Sphere{
-				Position: lib.Vec{
-					X: -8, Y: -4, Z: 16},
-				Radius: 4,
-				Shader: &lib.EmissiveShader{Color: lib.Color{
-					R: 0, G: 0, B: 100}}},
-		*/
+			R: 0, G: 0, B: 0}},
+		&lib.Sphere{
+			Position: lib.Vec{
+				X: -8, Y: -4, Z: 16},
+			Radius: 4,
+			Shader: &lib.EmissiveShader{Color: lib.Color{
+				R: 5, G: 5, B: 5}}},
 		&lib.Sphere{
 			Position: lib.Vec{
 				X: 0, Y: 94, Z: 15},
 			Radius: 90,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 0.5, G: 0.5, B: 0.5}}},
+				R: 0, G: 1, B: 0}}},
 		&lib.Sphere{
 			Position: lib.Vec{
 				X: 0, Y: 0, Z: 15},
 			Radius: 4,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 0.5, G: 0.5, B: 0.5}}}}
+				R: 1, G: 0, B: 0}}}}
 	camera := lib.Camera{
 		Position:     lib.Vec{X: 0, Y: 0, Z: 0.3},
 		ScreenWidth:  width,
