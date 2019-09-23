@@ -13,38 +13,45 @@ import (
 )
 
 const (
-	width    = 100
-	height   = 50
-	samples  = 100
-	maxDepth = 5
+	width    = 200
+	height   = 100
+	samples  = 50
+	maxDepth = 3
 )
 
 func main() {
 	var surfaces lib.SurfaceList = []lib.Surface{
 		&lib.Background{Color: lib.Color{
-			R: 0, G: 0, B: 0}},
+			R: 0.5, G: 0.7, B: 1}},
 		&lib.Sphere{
 			Position: lib.Vec{
-				X: -8, Y: -4, Z: 16},
-			Radius: 4,
-			Shader: &lib.EmissiveShader{Color: lib.Color{
-				R: 5, G: 5, B: 5}}},
-		&lib.Sphere{
-			Position: lib.Vec{
-				X: 0, Y: 94, Z: 15},
-			Radius: 90,
+				X: 0, Y: 204, Z: 15},
+			Radius: 200,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
 				R: 0, G: 1, B: 0}}},
 		&lib.Sphere{
 			Position: lib.Vec{
-				X: 0, Y: 0, Z: 15},
+				X: 8, Y: 0, Z: 11},
 			Radius: 4,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 1, G: 0, B: 0}}}}
+				R: 1, G: 0, B: 0}}},
+		&lib.Sphere{
+			Position: lib.Vec{
+				X: -8, Y: 0, Z: 11},
+			Radius: 4,
+			Shader: &lib.DiffuseShader{Color: lib.Color{
+				R: 0, G: 0, B: 1}}},
+		&lib.Sphere{
+			Position: lib.Vec{
+				X: 0, Y: 0, Z: 20},
+			Radius: 4,
+			Shader: &lib.ReflectiveShader{Color: lib.Color{
+				R: 0.5, G: 0.3, B: 1}}}}
 	camera := lib.Camera{
-		Position:     lib.Vec{X: 0, Y: 0, Z: 0.3},
-		ScreenWidth:  width,
-		ScreenHeight: height}
+		Position:      lib.Vec{X: 0, Y: 0, Z: 0.3},
+		ScreenWidth:   width,
+		ScreenHeight:  height,
+		FOVMultiplier: 1.5}
 
 	canvas := image.NewRGBA(image.Rect(0, 0, width, height))
 

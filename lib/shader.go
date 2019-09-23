@@ -73,13 +73,13 @@ func (m *MixedShader) Scatter(r *Ray, h *Hit) *ScatterResult {
 	return shader.Scatter(r, h)
 }
 
-// ReflectionShader is a metallic shader
-type ReflectionShader struct {
+// ReflectiveShader is a metallic shader
+type ReflectiveShader struct {
 	Color Color
 }
 
 // Scatter is an reflective material scatter renderer
-func (f *ReflectionShader) Scatter(r *Ray, h *Hit) *ScatterResult {
+func (f *ReflectiveShader) Scatter(r *Ray, h *Hit) *ScatterResult {
 	v := r.Direction.Norm()
 	n := h.Normal
 	return &ScatterResult{
