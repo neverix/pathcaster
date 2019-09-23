@@ -16,7 +16,7 @@ const (
 	width    = 100
 	height   = 50
 	samples  = 100
-	maxDepth = 50
+	maxDepth = 3
 )
 
 func main() {
@@ -25,7 +25,7 @@ func main() {
 			R: 0, G: 0, B: 0}},
 		&lib.Sphere{
 			Position: lib.Vec{
-				X: 0, Y: -9, Z: 15},
+				X: -8, Y: -4, Z: 16},
 			Radius: 4,
 			Shader: &lib.EmissiveShader{Color: lib.Color{
 				R: 0, G: 0, B: 100}}},

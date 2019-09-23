@@ -2,11 +2,11 @@ package lib
 
 import "math"
 
-// Sphere is a sphere
+// Sphere is a sphere shape
 type Sphere struct {
 	Position Vec
-	Radius float64
-	Shader Shader
+	Radius   float64
+	Shader   Shader
 }
 
 // Hit is an implementation of the hit method for a sphere
@@ -14,8 +14,8 @@ func (s *Sphere) Hit(r *Ray, tMin, tMax float64) *Hit {
 	offset := r.Position.Sub(s.Position)
 	a := r.Direction.Dot(r.Direction)
 	b := offset.Dot(r.Direction)
-	c := offset.Dot(offset) - s.Radius * s.Radius
-	d := b * b - a * c
+	c := offset.Dot(offset) - s.Radius*s.Radius
+	d := b*b - a*c
 	if d < 0 {
 		return nil
 	}

@@ -9,7 +9,7 @@ type Shader interface {
 
 // ScatterResult is a data type for scatter results
 type ScatterResult struct {
-	Albedo Color
+	Albedo    Color
 	Scattered *Ray
 }
 
@@ -35,6 +35,5 @@ func (d *DiffuseShader) Scatter(r *Ray, h *Hit) *ScatterResult {
 		rand.Float64(),
 		rand.Float64()}).Norm()
 	ray := &Ray{h.Position, offset}
-	color := d.Color
-	return &ScatterResult{color, ray}
+	return &ScatterResult{d.Color, ray}
 }

@@ -7,8 +7,8 @@ import (
 
 // Camera is a data type that represents a camera
 type Camera struct {
-	Position Vec
-	ScreenWidth int
+	Position     Vec
+	ScreenWidth  int
 	ScreenHeight int
 }
 
@@ -17,20 +17,23 @@ func (cam *Camera) CastRay(x int, y int) *Ray {
 	return &Ray{
 		Position: cam.Position,
 		Direction: Vec{
-			cam.Position.X + (float64(x) / float64(cam.ScreenWidth) - 0.5) * 
-				float64(cam.ScreenWidth) / float64(cam.ScreenHeight) +
-				(1.0 / float64(cam.ScreenWidth)) * (rand.Float64() * 2.0 - 1.0) / 2.0,
-			cam.Position.Y + float64(y) /
+			cam.Position.X + (float64(x)/float64(cam.ScreenWidth)-0.5)*
+				float64(cam.ScreenWidth)/float64(cam.ScreenHeight) +
+				(1.0/float64(cam.ScreenWidth))*(rand.Float64()*2.0-1.0)/2.0,
+			cam.Position.Y + float64(y)/
 				float64(cam.ScreenHeight) - 0.5 +
-				(1.0 / float64(cam.ScreenHeight)) * (rand.Float64() * 2.0 - 1.0) / 2.0,
+				(1.0/float64(cam.ScreenHeight))*(rand.Float64()*2.0-1.0)/2.0,
 			cam.Position.Z + 1}.Norm()}
 }
 
 // RenderRay renders a ray
 func (cam *Camera) RenderRay(world Surface, ray *Ray, depth, maxDepth int) Color {
+	if depth > maxDepth {
+		return Color{0, 0, 0}
+	}
 	hit := world.Hit(ray, 0.00001, math.Inf(1))
 	scatterResult := hit.Shader.Scatter(ray, hit)
-	if depth > maxDepth || scatterResult == nil {
+	if scatterResult == nil {
 		return Color{0, 0, 0}
 	}
 	if scatterResult.Scattered == nil {
@@ -39,7 +42,7 @@ func (cam *Camera) RenderRay(world Surface, ray *Ray, depth, maxDepth int) Color
 	scatteredPixel := cam.RenderRay(
 		world,
 		scatterResult.Scattered,
-		depth + 1,
+		depth+1,
 		maxDepth)
 	return scatterResult.Albedo.Multiply(scatteredPixel)
 }
