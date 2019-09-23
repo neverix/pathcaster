@@ -22,25 +22,27 @@ const (
 func main() {
 	var surfaces lib.SurfaceList = []lib.Surface{
 		&lib.Background{Color: lib.Color{
-			R: 0, G: 0, B: 0}},
-		&lib.Sphere{
-			Position: lib.Vec{
-				X: -8, Y: -4, Z: 16},
-			Radius: 4,
-			Shader: &lib.EmissiveShader{Color: lib.Color{
-				R: 0, G: 0, B: 100}}},
+			R: 1, G: 1, B: 1}},
+		/*
+			&lib.Sphere{
+				Position: lib.Vec{
+					X: -8, Y: -4, Z: 16},
+				Radius: 4,
+				Shader: &lib.EmissiveShader{Color: lib.Color{
+					R: 0, G: 0, B: 100}}},
+		*/
 		&lib.Sphere{
 			Position: lib.Vec{
 				X: 0, Y: 94, Z: 15},
 			Radius: 90,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 0, G: 1, B: 0}}},
+				R: 0.5, G: 0.5, B: 0.5}}},
 		&lib.Sphere{
 			Position: lib.Vec{
 				X: 0, Y: 0, Z: 15},
 			Radius: 4,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 1, G: 0, B: 0}}}}
+				R: 0.5, G: 0.5, B: 0.5}}}}
 	camera := lib.Camera{
 		Position:     lib.Vec{X: 0, Y: 0, Z: 0.3},
 		ScreenWidth:  width,
@@ -58,9 +60,9 @@ func main() {
 				bTotal += b
 			}
 			color := color.RGBA{
-				uint8(math.Min(rTotal/samples*255, 255)),
-				uint8(math.Min(gTotal/samples*255, 255)),
-				uint8(math.Min(bTotal/samples*255, 255)),
+				uint8(math.Sqrt(math.Min(rTotal/samples, 1)) * 255),
+				uint8(math.Sqrt(math.Min(gTotal/samples, 1)) * 255),
+				uint8(math.Sqrt(math.Min(bTotal/samples, 1)) * 255),
 				255}
 			canvas.Set(x, y, color)
 		}
