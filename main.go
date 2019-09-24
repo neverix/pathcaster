@@ -8,13 +8,15 @@ import (
 	"log"
 	"math"
 	"os"
+	"runtime"
+	"sync"
 
 	"github.com/neverix/pathcaster/lib"
 )
 
 const (
-	width    = 200
-	height   = 100
+	width    = 400
+	height   = 200
 	samples  = 50
 	maxDepth = 3
 )
@@ -54,24 +56,36 @@ func main() {
 		FOVMultiplier: 1.5}
 
 	canvas := image.NewRGBA(image.Rect(0, 0, width, height))
-
-	for x := 0; x < width; x++ {
-		for y := 0; y < height; y++ {
-			var rTotal, gTotal, bTotal float64
-			for i := 0; i < samples; i++ {
-				r, g, b := camera.RenderPixel(surfaces, x, y, maxDepth).Unwrap()
-				rTotal += r
-				gTotal += g
-				bTotal += b
-			}
-			color := color.RGBA{
-				uint8(math.Sqrt(math.Min(rTotal/samples, 1)) * 255),
-				uint8(math.Sqrt(math.Min(gTotal/samples, 1)) * 255),
-				uint8(math.Sqrt(math.Min(bTotal/samples, 1)) * 255),
-				255}
-			canvas.Set(x, y, color)
-		}
+	var workerWg sync.WaitGroup
+	CPUs := runtime.NumCPU()
+	widthPerCPU := width / CPUs
+	if width%CPUs != 0 {
+		CPUs++
 	}
+	workerWg.Add(CPUs)
+	for CPU := 0; CPU < CPUs; CPU++ {
+		go func(id int) {
+			for x := widthPerCPU * id; x < width && x < widthPerCPU*(id+1); x++ {
+				for y := 0; y < height; y++ {
+					var rTotal, gTotal, bTotal float64
+					for i := 0; i < samples; i++ {
+						r, g, b := camera.RenderPixel(surfaces, x, y, maxDepth).Unwrap()
+						rTotal += r
+						gTotal += g
+						bTotal += b
+					}
+					color := color.RGBA{
+						uint8(math.Sqrt(math.Min(rTotal/samples, 1)) * 255),
+						uint8(math.Sqrt(math.Min(gTotal/samples, 1)) * 255),
+						uint8(math.Sqrt(math.Min(bTotal/samples, 1)) * 255),
+						255}
+					canvas.Set(x, y, color)
+				}
+			}
+			workerWg.Done()
+		}(CPU)
+	}
+	workerWg.Wait()
 
 	outputFile, err := os.Create("render.png")
 	if err != nil {
