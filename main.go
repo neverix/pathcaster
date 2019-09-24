@@ -2,14 +2,9 @@ package main
 
 import (
 	"fmt"
-	"image"
-	"image/color"
 	"image/png"
 	"log"
-	"math"
 	"os"
-	"runtime"
-	"sync"
 
 	"github.com/neverix/pathcaster/lib"
 )
@@ -17,7 +12,7 @@ import (
 const (
 	width    = 400
 	height   = 200
-	samples  = 50
+	samples  = 100
 	maxDepth = 3
 )
 
@@ -49,43 +44,16 @@ func main() {
 			Radius: 4,
 			Shader: &lib.ReflectiveShader{Color: lib.Color{
 				R: 0.5, G: 0.3, B: 1}}}}
+
 	camera := lib.Camera{
 		Position:      lib.Vec{X: 0, Y: 0, Z: 0.3},
 		ScreenWidth:   width,
 		ScreenHeight:  height,
 		FOVMultiplier: 1.5}
-
-	canvas := image.NewRGBA(image.Rect(0, 0, width, height))
-	var workerWg sync.WaitGroup
-	CPUs := runtime.NumCPU()
-	widthPerCPU := width / CPUs
-	if width%CPUs != 0 {
-		CPUs++
-	}
-	workerWg.Add(CPUs)
-	for CPU := 0; CPU < CPUs; CPU++ {
-		go func(id int) {
-			for x := widthPerCPU * id; x < width && x < widthPerCPU*(id+1); x++ {
-				for y := 0; y < height; y++ {
-					var rTotal, gTotal, bTotal float64
-					for i := 0; i < samples; i++ {
-						r, g, b := camera.RenderPixel(surfaces, x, y, maxDepth).Unwrap()
-						rTotal += r
-						gTotal += g
-						bTotal += b
-					}
-					color := color.RGBA{
-						uint8(math.Sqrt(math.Min(rTotal/samples, 1)) * 255),
-						uint8(math.Sqrt(math.Min(gTotal/samples, 1)) * 255),
-						uint8(math.Sqrt(math.Min(bTotal/samples, 1)) * 255),
-						255}
-					canvas.Set(x, y, color)
-				}
-			}
-			workerWg.Done()
-		}(CPU)
-	}
-	workerWg.Wait()
+	renderConfig := lib.RenderConfig{
+		MaxDepth: maxDepth,
+		Samples:  samples}
+	canvas := camera.RenderSurface(surfaces, renderConfig)
 
 	outputFile, err := os.Create("render.png")
 	if err != nil {

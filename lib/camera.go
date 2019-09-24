@@ -13,26 +13,9 @@ type Camera struct {
 	FOVMultiplier float64
 }
 
-// CastRay casts a ray from the camera's origin to a point on the screen
-func (cam *Camera) CastRay(x int, y int) *Ray {
-	if cam.FOVMultiplier == 0 {
-		cam.FOVMultiplier = 1
-	}
-	xNoise := (1.0 / float64(cam.ScreenWidth)) *
-		(rand.Float64()*2.0 - 1.0) / 2.0 * cam.FOVMultiplier
-	yNoise := (1.0 / float64(cam.ScreenHeight)) *
-		(rand.Float64()*2.0 - 1.0) / 2.0 * cam.FOVMultiplier
-	return &Ray{
-		Position: cam.Position,
-		Direction: Vec{
-			cam.Position.X +
-				(float64(x)/float64(cam.ScreenWidth)-0.5)*
-					float64(cam.ScreenWidth)/float64(cam.ScreenHeight)*
-					cam.FOVMultiplier + xNoise,
-			cam.Position.Y +
-				(float64(y)/float64(cam.ScreenHeight)-0.5)*
-					cam.FOVMultiplier + yNoise,
-			cam.Position.Z + 1}.Norm()}
+// RenderPixel renders a pixel
+func (cam *Camera) RenderPixel(world Surface, x, y, maxDepth int) Color {
+	return cam.RenderRay(world, cam.CastRay(x, y), 0, maxDepth)
 }
 
 // RenderRay renders a ray
@@ -56,7 +39,24 @@ func (cam *Camera) RenderRay(world Surface, ray *Ray, depth, maxDepth int) Color
 	return scatterResult.Albedo.Multiply(scatteredPixel)
 }
 
-// RenderPixel renders a pixel
-func (cam *Camera) RenderPixel(world Surface, x, y, maxDepth int) Color {
-	return cam.RenderRay(world, cam.CastRay(x, y), 0, maxDepth)
+// CastRay casts a ray from the camera's origin to a point on the screen
+func (cam *Camera) CastRay(x int, y int) *Ray {
+	if cam.FOVMultiplier == 0 {
+		cam.FOVMultiplier = 1
+	}
+	xNoise := (1.0 / float64(cam.ScreenWidth)) *
+		(rand.Float64()*2.0 - 1.0) / 2.0 * cam.FOVMultiplier
+	yNoise := (1.0 / float64(cam.ScreenHeight)) *
+		(rand.Float64()*2.0 - 1.0) / 2.0 * cam.FOVMultiplier
+	return &Ray{
+		Position: cam.Position,
+		Direction: Vec{
+			cam.Position.X +
+				(float64(x)/float64(cam.ScreenWidth)-0.5)*
+					float64(cam.ScreenWidth)/float64(cam.ScreenHeight)*
+					cam.FOVMultiplier + xNoise,
+			cam.Position.Y +
+				(float64(y)/float64(cam.ScreenHeight)-0.5)*
+					cam.FOVMultiplier + yNoise,
+			cam.Position.Z + 1}.Norm()}
 }
