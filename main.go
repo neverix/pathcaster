@@ -40,19 +40,16 @@ func main() {
 				R: 0, G: 0, B: 1}}},
 		&lib.Sphere{
 			Position: lib.Vec{
-				X: 0, Y: 0, Z: 20},
+				X: 0, Y: 0, Z: 12},
 			Radius: 4,
-			Shader: &lib.MixedShader{
-				X: []lib.Shader{&lib.ReflectiveShader{Color: lib.Color{
-					R: 0.7, G: 0.5, B: 0}}, &lib.DiffuseShader{Color: lib.Color{
-					R: 0.7, G: 0.5, B: 0}}},
-				P: []float64{1, 2}}}}
+			Shader: &lib.ReflectiveShader{Color: lib.Color{
+				R: 0.8, G: 0.6, B: 0.2}}}}
 
 	camera := lib.Camera{
 		Position:      lib.Vec{X: 0, Y: 0, Z: 0.3},
 		ScreenWidth:   width,
 		ScreenHeight:  height,
-		FOVMultiplier: 1.5}
+		FOVMultiplier: 2}
 	renderConfig := lib.RenderConfig{
 		MaxDepth: maxDepth,
 		Samples:  samples}

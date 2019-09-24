@@ -85,6 +85,6 @@ func (f *ReflectiveShader) Scatter(r *Ray, h *Hit) *ScatterResult {
 	return &ScatterResult{
 		f.Color,
 		&Ray{
-			r.Position,
-			v.Sub(n.Mul(v.Dot(h.Normal) * 2))}}
+			h.Position,
+			v.Sub(n.Mul(v.Dot(n) * 2))}}
 }
