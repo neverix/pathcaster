@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	width    = 400
-	height   = 200
-	samples  = 100
+	width    = 200
+	height   = 100
+	samples  = 50
 	maxDepth = 3
 )
 
@@ -42,8 +42,11 @@ func main() {
 			Position: lib.Vec{
 				X: 0, Y: 0, Z: 20},
 			Radius: 4,
-			Shader: &lib.ReflectiveShader{Color: lib.Color{
-				R: 0.5, G: 0.3, B: 1}}}}
+			Shader: &lib.MixedShader{
+				X: []lib.Shader{&lib.ReflectiveShader{Color: lib.Color{
+					R: 0.7, G: 0.5, B: 0}}, &lib.DiffuseShader{Color: lib.Color{
+					R: 0.7, G: 0.5, B: 0}}},
+				P: []float64{1, 2}}}}
 
 	camera := lib.Camera{
 		Position:      lib.Vec{X: 0, Y: 0, Z: 0.3},
