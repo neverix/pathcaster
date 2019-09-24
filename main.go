@@ -25,19 +25,19 @@ func main() {
 				X: 0, Y: 204, Z: 15},
 			Radius: 200,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 0, G: 1, B: 0}}},
+				R: 0.4, G: 0.8, B: 0}}},
 		&lib.Sphere{
 			Position: lib.Vec{
 				X: 8, Y: 0, Z: 11},
 			Radius: 4,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 1, G: 0, B: 0}}},
+				R: 0.9, G: 0.1, B: 0}}},
 		&lib.Sphere{
 			Position: lib.Vec{
 				X: -8, Y: 0, Z: 11},
 			Radius: 4,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 0, G: 0, B: 1}}},
+				R: 0, G: 0.1, B: 0.9}}},
 		&lib.Sphere{
 			Position: lib.Vec{
 				X: 0, Y: 0, Z: 12},
