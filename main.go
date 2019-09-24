@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	width    = 200
-	height   = 100
-	samples  = 50
+	width    = 400
+	height   = 200
+	samples  = 100
 	maxDepth = 3
 )
 
