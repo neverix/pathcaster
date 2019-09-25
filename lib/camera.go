@@ -44,6 +44,7 @@ func (cam *Camera) CastRay(x int, y int) *Ray {
 	if cam.FOVMultiplier == 0 {
 		cam.FOVMultiplier = 1
 	}
+	y = cam.ScreenHeight - y
 	xNoise := (1.0 / float64(cam.ScreenWidth)) *
 		(rand.Float64()*2.0 - 1.0) / 2.0 * cam.FOVMultiplier
 	yNoise := (1.0 / float64(cam.ScreenHeight)) *

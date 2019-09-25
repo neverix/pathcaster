@@ -17,42 +17,36 @@ const (
 )
 
 func main() {
+	pyramid, err := lib.ParseOBJFile("data/pyramid.obj")
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	var surfaces lib.SurfaceList = []lib.Surface{
 		&lib.Background{Color: lib.Color{
 			R: 0.5, G: 0.7, B: 1}},
 		&lib.Sphere{
 			Position: lib.Vec{
-				X: 0, Y: 204, Z: 15},
+				X: 0, Y: -204, Z: 15},
 			Radius: 200,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
 				R: 0.4, G: 0.8, B: 0}}},
 		&lib.Sphere{
 			Position: lib.Vec{
-				X: 8, Y: 0, Z: 11},
+				X: -8, Y: 0, Z: 11},
 			Radius: 4,
 			Shader: &lib.DiffuseShader{Color: lib.Color{
 				R: 0.9, G: 0.1, B: 0}}},
 		&lib.Sphere{
 			Position: lib.Vec{
-				X: -8, Y: 0, Z: 11},
-			Radius: 4,
-			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 0, G: 0.1, B: 0.9}}},
-		&lib.Sphere{
-			Position: lib.Vec{
-				X: 0, Y: 0, Z: 12},
+				X: 8, Y: 0, Z: 11},
 			Radius: 4,
 			Shader: &lib.ReflectiveShader{Color: lib.Color{
 				R: 0.8, G: 0.6, B: 0.2}}},
-		&lib.Triangle{
-			A: lib.Vec{X: -5, Y: 2, Z: 12},
-			B: lib.Vec{X: 0, Y: -7, Z: 12},
-			C: lib.Vec{X: 5, Y: 2, Z: 12},
-			Shader: &lib.DiffuseShader{Color: lib.Color{
-				R: 0.7, G: 0.7, B: 0.7}}}}
+		pyramid.ToSurface()}
 
 	camera := lib.Camera{
-		Position:     lib.Vec{X: 0, Y: 0, Z: -0.2},
+		Position:     lib.Vec{X: 0, Y: 0, Z: 0},
 		ScreenWidth:  width,
 		ScreenHeight: height}
 	renderConfig := lib.RenderConfig{
