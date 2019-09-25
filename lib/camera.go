@@ -58,5 +58,5 @@ func (cam *Camera) CastRay(x int, y int) *Ray {
 			cam.Position.Y +
 				(float64(y)/float64(cam.ScreenHeight)-0.5)*
 					cam.FOVMultiplier + yNoise,
-			cam.Position.Z + 1}.Norm()}
+			cam.Position.Z + cam.FOVMultiplier}.Norm()}
 }

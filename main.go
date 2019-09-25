@@ -10,9 +10,9 @@ import (
 )
 
 const (
-	width    = 400
-	height   = 200
-	samples  = 100
+	width    = 200
+	height   = 100
+	samples  = 32
 	maxDepth = 3
 )
 
@@ -43,13 +43,18 @@ func main() {
 				X: 0, Y: 0, Z: 12},
 			Radius: 4,
 			Shader: &lib.ReflectiveShader{Color: lib.Color{
-				R: 0.8, G: 0.6, B: 0.2}}}}
+				R: 0.8, G: 0.6, B: 0.2}}},
+		&lib.Triangle{
+			A: lib.Vec{X: -5, Y: 2, Z: 12},
+			B: lib.Vec{X: 0, Y: -7, Z: 12},
+			C: lib.Vec{X: 5, Y: 2, Z: 12},
+			Shader: &lib.DiffuseShader{Color: lib.Color{
+				R: 0.7, G: 0.7, B: 0.7}}}}
 
 	camera := lib.Camera{
-		Position:      lib.Vec{X: 0, Y: 0, Z: 0.3},
-		ScreenWidth:   width,
-		ScreenHeight:  height,
-		FOVMultiplier: 2}
+		Position:     lib.Vec{X: 0, Y: 0, Z: -0.2},
+		ScreenWidth:  width,
+		ScreenHeight: height}
 	renderConfig := lib.RenderConfig{
 		MaxDepth: maxDepth,
 		Samples:  samples}
