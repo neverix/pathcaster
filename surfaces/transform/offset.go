@@ -1,4 +1,4 @@
-package surfaces
+package transform
 
 import (
 	"github.com/neverix/pathcaster/pathcaster"

@@ -11,6 +11,7 @@ import (
 	"github.com/neverix/pathcaster/pathcaster"
 	"github.com/neverix/pathcaster/shaders"
 	"github.com/neverix/pathcaster/surfaces"
+	"github.com/neverix/pathcaster/surfaces/transform"
 )
 
 const (
@@ -26,7 +27,7 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	model.Shader = &shaders.ReflectiveShader{
+	model.Shader = &shaders.DiffuseShader{
 		Color: util.Color{
 			R: 0.8, G: 0.6, B: 0.2}}
 	fmt.Println("Parsed!")
@@ -51,10 +52,13 @@ func main() {
 			Radius: 4,
 			Shader: &shaders.ReflectiveShader{Color: util.Color{
 				R: 0.8, G: 0.6, B: 0.2}}},
-		&surfaces.Offset{
-			Child: model.ToSurface(),
+		&transform.Offset{
+			Child: &transform.Scale{
+				Child: model.ToSurface(),
+				Scale: util.Vec{
+					X: 1, Y: 1, Z: -1}},
 			Offset: util.Vec{
-				X: -2, Y: 0, Z: 5}}}
+				X: 0, Y: 0, Z: 3}}}
 
 	camera := pathcaster.Camera{
 		Position:     util.Vec{X: -1, Y: 1, Z: -8},

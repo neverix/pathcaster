@@ -24,6 +24,11 @@ func (v Vec) Mul(o float64) Vec {
 	return Vec{v.X * o, v.Y * o, v.Z * o}
 }
 
+// Mul3D multiplies a vector by a vector component-wise
+func (v Vec) Mul3D(o Vec) Vec {
+	return Vec{v.X * o.X, v.Y * o.Y, v.Z * o.Z}
+}
+
 // Div divides a vector by a number
 func (v Vec) Div(o float64) Vec {
 	return Vec{v.X / o, v.Y / o, v.Z / o}
