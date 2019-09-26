@@ -1,4 +1,4 @@
-package lib
+package util
 
 // Color is an HDR replacement to Go's image/color.Color
 type Color struct {

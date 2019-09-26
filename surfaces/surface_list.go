@@ -1,16 +1,16 @@
-package lib
+package surfaces
 
-// Surface is an interface for any hittable surface
-type Surface interface {
-	Hit(r *Ray, tMin, tMax float64) *Hit
-}
+import (
+	"github.com/neverix/pathcaster/pathcaster"
+	"github.com/neverix/pathcaster/util"
+)
 
 // SurfaceList is a list of surfaces
-type SurfaceList []Surface
+type SurfaceList []pathcaster.Surface
 
 // Hit is an implementation of the hit function for surface lists
-func (l SurfaceList) Hit(r *Ray, tMin, tMax float64) *Hit {
-	minDistanceHit := new(Hit)
+func (l SurfaceList) Hit(r *util.Ray, tMin, tMax float64) *pathcaster.Hit {
+	minDistanceHit := new(pathcaster.Hit)
 	minDistance := tMax
 	for _, surf := range l {
 		hit := surf.Hit(r, tMin, minDistance)

@@ -1,12 +1,15 @@
-package lib
+package surfaces
 
 import (
 	"bufio"
 	"fmt"
+	"github.com/neverix/pathcaster/util"
 	"io"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/neverix/pathcaster/shaders"
 )
 
 // ParseOBJFile reads a model from an OBJ file
@@ -23,7 +26,7 @@ func ParseOBJFile(path string) (model *Model, err error) {
 // ParseOBJ reads a model from an OBJ file reader
 func ParseOBJ(reader *bufio.Reader) (model *Model, err error) {
 	model = new(Model)
-	model.Shader = &DiffuseShader{Color: Color{
+	model.Shader = &shaders.DiffuseShader{Color: util.Color{
 		R: 0.7, G: 0.7, B: 0.7}} // TODO
 	for {
 		line, err := reader.ReadString('\n')
@@ -46,7 +49,7 @@ func ParseOBJ(reader *bufio.Reader) (model *Model, err error) {
 
 func parseVertex(line string, model *Model) {
 	nums := strings.Split(strings.TrimPrefix(line, "v "), " ")
-	model.Vertices = append(model.Vertices, Vec{
+	model.Vertices = append(model.Vertices, util.Vec{
 		X: parseFloat(nums[0]),
 		Y: parseFloat(nums[1]),
 		Z: parseFloat(nums[2])})

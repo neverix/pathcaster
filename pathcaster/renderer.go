@@ -1,4 +1,4 @@
-package lib
+package pathcaster
 
 import (
 	"image"

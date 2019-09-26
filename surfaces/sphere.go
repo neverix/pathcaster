@@ -1,16 +1,21 @@
-package lib
+package surfaces
 
-import "math"
+import (
+	"github.com/neverix/pathcaster/util"
+	"math"
+
+	"github.com/neverix/pathcaster/pathcaster"
+)
 
 // Sphere is a sphere shape
 type Sphere struct {
-	Position Vec
+	Position util.Vec
 	Radius   float64
-	Shader   Shader
+	Shader   pathcaster.Shader
 }
 
 // Hit is an implementation of the hit method for a sphere
-func (s *Sphere) Hit(r *Ray, tMin, tMax float64) *Hit {
+func (s *Sphere) Hit(r *util.Ray, tMin, tMax float64) *pathcaster.Hit {
 	offset := r.Position.Sub(s.Position)
 	a := r.Direction.Dot(r.Direction)
 	b := offset.Dot(r.Direction)
@@ -28,8 +33,8 @@ func (s *Sphere) Hit(r *Ray, tMin, tMax float64) *Hit {
 	}
 	hitPosition := r.AtPosition(t)
 	normal := hitPosition.Sub(s.Position).Norm()
-	return &Hit{
-		hitPosition,
-		normal,
-		s.Shader}
+	return &pathcaster.Hit{
+		Position: hitPosition,
+		Normal:   normal,
+		Shader:   s.Shader}
 }
