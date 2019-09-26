@@ -27,9 +27,9 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-	model.Shader = &shaders.DiffuseShader{
+	model.Shader = &shaders.EmissiveShader{
 		Color: util.Color{
-			R: 0.8, G: 0.6, B: 0.2}}
+			R: 0.8 * 3, G: 0.6 * 3, B: 0.2 * 3}}
 	fmt.Println("Parsed!")
 	var world surfaces.SurfaceList = []pathcaster.Surface{
 		&surfaces.Background{Color: util.Color{
