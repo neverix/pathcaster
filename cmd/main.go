@@ -14,18 +14,21 @@ import (
 )
 
 const (
-	width    = 100
-	height   = 50
+	width    = 200
+	height   = 100
 	samples  = 3
 	maxDepth = 3
 )
 
 func main() {
-	model, err := surfaces.ParseOBJFile("data/big/teapot.obj")
+	model, err := surfaces.ParseOBJFile("data/big/simulecow.obj")
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+	model.Shader = &shaders.ReflectiveShader{
+		Color: util.Color{
+			R: 0.8, G: 0.6, B: 0.2}}
 	fmt.Println("Parsed!")
 	var world surfaces.SurfaceList = []pathcaster.Surface{
 		&surfaces.Background{Color: util.Color{
@@ -48,10 +51,13 @@ func main() {
 			Radius: 4,
 			Shader: &shaders.ReflectiveShader{Color: util.Color{
 				R: 0.8, G: 0.6, B: 0.2}}},
-		model.ToSurface()}
+		&surfaces.Offset{
+			Child: model.ToSurface(),
+			Offset: util.Vec{
+				X: -2, Y: 0, Z: 5}}}
 
 	camera := pathcaster.Camera{
-		Position:     util.Vec{X: 0, Y: 1, Z: -6},
+		Position:     util.Vec{X: -1, Y: 1, Z: -8},
 		ScreenWidth:  width,
 		ScreenHeight: height}
 	renderConfig := pathcaster.RenderConfig{

@@ -10,3 +10,10 @@ type Ray struct {
 func (r Ray) AtPosition(p float64) Vec {
 	return r.Position.Add(r.Direction.Mul(p))
 }
+
+// Clone creates a copy of a ray
+func (r Ray) Clone() Ray {
+	return Ray{
+		Position:  r.Position,
+		Direction: r.Direction}
+}
