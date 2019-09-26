@@ -1,9 +1,10 @@
 package pathcaster
 
 import (
-	"github.com/neverix/pathcaster/util"
 	"math"
 	"math/rand"
+
+	"github.com/neverix/pathcaster/util"
 )
 
 // Camera is a data type that represents a camera
@@ -22,12 +23,12 @@ func (cam *Camera) RenderPixel(world Surface, x, y, maxDepth int) util.Color {
 // RenderRay renders a ray
 func (cam *Camera) RenderRay(world Surface, ray *util.Ray, depth, maxDepth int) util.Color {
 	if depth > maxDepth {
-		return util.Color{0, 0, 0}
+		return util.Color{R: 0, G: 0, B: 0}
 	}
 	hit := world.Hit(ray, 0.00001, math.Inf(1))
 	scatterResult := hit.Shader.Scatter(ray, hit)
 	if scatterResult == nil {
-		return util.Color{0, 0, 0}
+		return util.Color{R: 0, G: 0, B: 0}
 	}
 	if scatterResult.Scattered == nil {
 		return scatterResult.Albedo
@@ -53,12 +54,10 @@ func (cam *Camera) CastRay(x int, y int) *util.Ray {
 	return &util.Ray{
 		Position: cam.Position,
 		Direction: util.Vec{
-			cam.Position.X +
-				(float64(x)/float64(cam.ScreenWidth)-0.5)*
-					float64(cam.ScreenWidth)/float64(cam.ScreenHeight)*
-					cam.FOVMultiplier + xNoise,
-			cam.Position.Y +
-				(float64(y)/float64(cam.ScreenHeight)-0.5)*
-					cam.FOVMultiplier + yNoise,
-			cam.Position.Z + cam.FOVMultiplier}.Norm()}
+			X: (float64(x)/float64(cam.ScreenWidth)-0.5)*
+				float64(cam.ScreenWidth)/float64(cam.ScreenHeight)*
+				cam.FOVMultiplier + xNoise,
+			Y: (float64(y)/float64(cam.ScreenHeight)-0.5)*
+				cam.FOVMultiplier + yNoise,
+			Z: 1}.Norm()}
 }

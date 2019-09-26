@@ -3,13 +3,13 @@ package surfaces
 import (
 	"bufio"
 	"fmt"
-	"github.com/neverix/pathcaster/util"
 	"io"
 	"os"
 	"strconv"
 	"strings"
 
 	"github.com/neverix/pathcaster/shaders"
+	"github.com/neverix/pathcaster/util"
 )
 
 // ParseOBJFile reads a model from an OBJ file
@@ -27,7 +27,7 @@ func ParseOBJFile(path string) (model *Model, err error) {
 func ParseOBJ(reader *bufio.Reader) (model *Model, err error) {
 	model = new(Model)
 	model.Shader = &shaders.DiffuseShader{Color: util.Color{
-		R: 0.7, G: 0.7, B: 0.7}} // TODO
+		R: 0.8, G: 0.8, B: 0.8}} // TODO
 	for {
 		line, err := reader.ReadString('\n')
 		line = strings.TrimSuffix(line, "\n")

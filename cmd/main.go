@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/neverix/pathcaster/util"
 	"image/png"
 	"log"
 	"os"
+
+	"github.com/neverix/pathcaster/util"
 
 	"github.com/neverix/pathcaster/pathcaster"
 	"github.com/neverix/pathcaster/shaders"
@@ -15,7 +16,7 @@ import (
 const (
 	width    = 200
 	height   = 100
-	samples  = 32
+	samples  = 64
 	maxDepth = 3
 )
 
@@ -49,7 +50,7 @@ func main() {
 		pyramid.ToSurface()}
 
 	camera := pathcaster.Camera{
-		Position:     util.Vec{X: 0, Y: 0, Z: 0},
+		Position:     util.Vec{X: 0, Y: 0, Z: -6},
 		ScreenWidth:  width,
 		ScreenHeight: height}
 	renderConfig := pathcaster.RenderConfig{
