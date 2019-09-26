@@ -50,8 +50,10 @@ func main() {
 			Position: util.Vec{
 				X: 8, Y: 0, Z: 11},
 			Radius: 4,
-			Shader: &shaders.ReflectiveShader{Color: util.Color{
-				R: 0.8, G: 0.6, B: 0.2}}},
+			Shader: &shaders.DiffuseShader{
+				Color: util.Color{
+					R: 0.8, G: 0.6, B: 0.2},
+				Reflection: 0.9}},
 		&transform.Offset{
 			Child: &transform.Scale{
 				Child: model.ToSurface(),

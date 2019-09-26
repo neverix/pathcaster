@@ -54,6 +54,11 @@ func (v Vec) Norm() Vec {
 	return v.Div(v.Mag())
 }
 
+// Lerp linearly interpolates between two vectors
+func (v Vec) Lerp(o Vec, t float64) Vec {
+	return v.Add(o.Sub(v).Mul(t))
+}
+
 // Dot computes the dot product of two vectors
 func (v Vec) Dot(o Vec) float64 {
 	return v.X*o.X + v.Y*o.Y + v.Z*o.Z
