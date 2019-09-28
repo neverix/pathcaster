@@ -26,8 +26,7 @@ func ParseOBJFile(path string) (model *Model, err error) {
 // ParseOBJ reads a model from an OBJ file reader
 func ParseOBJ(reader *bufio.Reader) (model *Model, err error) {
 	model = new(Model)
-	model.Shader = &shaders.DiffuseShader{Color: util.Color{
-		R: 0.8, G: 0.8, B: 0.8}} // TODO
+	model.Shader = &shaders.DiffuseShader{} // TODO
 	for {
 		line, err := reader.ReadString('\n')
 		line = strings.TrimSuffix(line, "\n")

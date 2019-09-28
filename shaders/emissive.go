@@ -6,13 +6,11 @@ import (
 )
 
 // EmissiveShader is an emissive shader
-type EmissiveShader struct {
-	Color util.Color
-}
+type EmissiveShader struct{}
 
 // Scatter is an emissive material scatter renderer
 func (d *EmissiveShader) Scatter(r *util.Ray, h *pathcaster.Hit) *pathcaster.ScatterResult {
 	return &pathcaster.ScatterResult{
-		Albedo:    d.Color,
+		Albedo:    h.Texture.At(h.UV),
 		Scattered: nil}
 }

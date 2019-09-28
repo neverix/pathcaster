@@ -6,6 +6,8 @@ import (
 	"math"
 	"runtime"
 	"sync"
+
+	"github.com/neverix/pathcaster/util"
 )
 
 // RenderConfig is a configuration for raytracing
@@ -20,7 +22,7 @@ func (cam *Camera) RenderSurface(world Surface, renderConfig RenderConfig) *imag
 	var workerWg sync.WaitGroup
 	CPUs := runtime.NumCPU()
 	widthPerCPU := cam.ScreenWidth / CPUs
-	if cam.ScreenWidth%CPUs != 0 {
+	for cam.ScreenWidth%CPUs != 0 {
 		CPUs++
 	}
 	workerWg.Add(CPUs)
@@ -49,4 +51,33 @@ func (cam *Camera) RenderSurface(world Surface, renderConfig RenderConfig) *imag
 	workerWg.Wait()
 
 	return canvas
+}
+
+// RenderPixel renders a pixel
+func (cam *Camera) RenderPixel(world Surface, x, y, maxDepth int) util.Color {
+	return cam.RenderRay(world, cam.CastRay(x, y), 0, maxDepth)
+}
+
+// RenderRay renders a ray
+func (cam *Camera) RenderRay(world Surface, ray *util.Ray, depth, maxDepth int) util.Color {
+	if depth > maxDepth {
+		return util.Color{R: 0, G: 0, B: 0}
+	}
+	hit := world.Hit(ray, 0.00001, math.Inf(1))
+	if hit.Texture == nil {
+		hit.Texture = &util.Color{R: 0.9, G: 0.9, B: 0.9}
+	}
+	scatterResult := hit.Shader.Scatter(ray, hit)
+	if scatterResult == nil {
+		return util.Color{R: 0, G: 0, B: 0}
+	}
+	if scatterResult.Scattered == nil {
+		return scatterResult.Albedo
+	}
+	scatteredPixel := cam.RenderRay(
+		world,
+		scatterResult.Scattered,
+		depth+1,
+		maxDepth)
+	return scatterResult.Albedo.Multiply(scatteredPixel)
 }

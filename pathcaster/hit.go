@@ -7,4 +7,6 @@ type Hit struct {
 	Position util.Vec
 	Normal   util.Vec
 	Shader   Shader
+	UV       util.UV
+	Texture  util.Texture
 }

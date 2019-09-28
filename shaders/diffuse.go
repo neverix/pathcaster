@@ -10,7 +10,6 @@ import (
 
 // DiffuseShader is an diffuse shader
 type DiffuseShader struct {
-	Color      util.Color
 	Reflection float64
 }
 
@@ -29,6 +28,6 @@ func (d *DiffuseShader) Scatter(r *util.Ray, h *pathcaster.Hit) *pathcaster.Scat
 		Position:  h.Position,
 		Direction: offset}
 	return &pathcaster.ScatterResult{
-		Albedo:    d.Color,
+		Albedo:    h.Texture.At(h.UV),
 		Scattered: ray}
 }

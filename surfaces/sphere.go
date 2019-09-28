@@ -1,8 +1,9 @@
 package surfaces
 
 import (
-	"github.com/neverix/pathcaster/util"
 	"math"
+
+	"github.com/neverix/pathcaster/util"
 
 	"github.com/neverix/pathcaster/pathcaster"
 )
@@ -36,5 +37,8 @@ func (s *Sphere) Hit(r *util.Ray, tMin, tMax float64) *pathcaster.Hit {
 	return &pathcaster.Hit{
 		Position: hitPosition,
 		Normal:   normal,
-		Shader:   s.Shader}
+		Shader:   s.Shader,
+		UV: util.UV{
+			U: polar(normal.X, normal.Z),
+			V: -normal.Y}}
 }

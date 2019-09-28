@@ -1,8 +1,9 @@
 package surfaces
 
 import (
-	"github.com/neverix/pathcaster/util"
 	"math"
+
+	"github.com/neverix/pathcaster/util"
 
 	"github.com/neverix/pathcaster/pathcaster"
 	"github.com/neverix/pathcaster/shaders"
@@ -10,7 +11,7 @@ import (
 
 // Background is a background surface
 type Background struct {
-	Color util.Color
+	Texture util.Texture
 }
 
 // Hit is an implementation of the hit method for backgrounds
@@ -19,8 +20,15 @@ func (b *Background) Hit(r *util.Ray, tMin, tMax float64) *pathcaster.Hit {
 		return &pathcaster.Hit{
 			Position: r.AtPosition(math.Pow(2.0, 64)),
 			Normal:   r.Direction.Neg(),
-			Shader: &shaders.EmissiveShader{
-				Color: b.Color}}
+			Shader:   &shaders.EmissiveShader{},
+			UV: util.UV{
+				U: polar(r.Direction.X, r.Direction.Z),
+				V: r.Direction.Y},
+			Texture: b.Texture}
 	}
 	return nil
+}
+
+func polar(x, y float64) float64 {
+	return math.Atan2(y, x)/math.Pi/2 + 0.5
 }
